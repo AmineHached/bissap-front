@@ -1,9 +1,9 @@
 .highlight {
-  color: yellow;
-  background-color: red;
+  color: #222;
+  background-color: #ffeb3b;
 }
 
 .normal {
-  color: grey;
-  background-color: purple;
+  color: #fff;
+  background-color: #6a1b9a;
 }

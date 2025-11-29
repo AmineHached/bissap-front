@@ -1,1 +1,30 @@
-<p>user-form works!</p>
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    
+  <mat-form-field appearance="fill">
+    <input matInput formControlName="name" placeholder="Name">
+    <mat-error *ngIf="formGroup.get('name')?.invalid && formGroup.get('name')?.touched">Name is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <input matInput formControlName="email" type="email" placeholder="Email">
+    <mat-error *ngIf="formGroup.get('email')?.invalid && formGroup.get('email')?.touched">A valid email is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <input matInput formControlName="age" type="number" placeholder="Age">
+    <mat-error *ngIf="formGroup.get('age')?.invalid && formGroup.get('age')?.touched">Please enter a valid age</mat-error>
+  </mat-form-field>
+
+  <button type="submit">Submit</button>
+</form>
+
+<form #userForm="ngForm">
+  <input name="name" ngModel [ngModelOptions]="{standalone: true}" placeholder="Name" required>
+    <div *ngIf="userForm.submitted && !userForm.controls['name']?.valid" class="error">
+      Name is required.
+    </div>
+
+  <input name="email" ngModel [ngModelOptions]="{standalone: true}" placeholder="Email" required email>
+  <input name="age" ngModel [ngModelOptions]="{standalone: true}" placeholder="Age" required type="number">
+    <button (click)="saveUserTDF(userForm)">Save User TDF</button>
+</form>

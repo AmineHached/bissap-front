@@ -1,0 +1,86 @@
+<div class="container mt-5">
+  <p>The value of x is: {{ x }}</p>
+  <hr />
+  <button [hidden]="count === 10" (click)="incrementCount()">Increment Count</button>
+  <button [disabled]="count === 0" (click)="decrementCount()">Decrement Count</button>
+  <p>Current Count: {{ count }}</p>
+  <img [src]="img" alt="Angular Logo" />
+
+  <div class="color-buttons">
+    <button class="btn btn-info" (click)="changeColor('lightblue')">blue</button>
+    <button class="btn btn-info" (click)="changeColor('lightgreen')">green</button>
+    <button class="btn btn-info" (click)="changeColor('lightcoral')">red</button>
+    <button class="btn btn-info" (click)="changeColor('white')">reset</button>
+  </div>  
+  <router-outlet></router-outlet>
+  <h1>from app-user-component</h1>
+
+  <div class="mt-5">
+    [6] Items List
+    <ul>
+      <li *ngFor="let item of items; index as index">{{ index }} - {{ item }}</li>
+    </ul>
+  </div>
+  <div class="mt-5">
+    [7]
+    <select #statusSelect (change)="changeStatus(statusSelect.value)" name="statusSelect" id="status">
+      <option value="active">Active</option>
+      <option value="inactive">Inactive</option>
+      <option value="pending">Pending</option>
+    </select>
+    <p>Selected Status: {{ status }}</p>
+  </div>
+  <div class="mt-2" [ngSwitch]="status">
+    <p *ngSwitchCase="'active'" class="alert alert-success">The user is active.</p>
+    <p *ngSwitchCase="'inactive'" class="alert alert-danger">The user is inactive.</p>
+    <p *ngSwitchCase="'pending'" class="alert alert-warning">The user status is pending.</p>
+    <p *ngSwitchDefault>Please select a status.</p>
+  </div>
+
+
+
+  
+  <div class="mt-5">
+      [8] Dynamic Class Binding
+    <div [ngClass]="{ 'highlight': isHighlighted ,
+      'normal': !isHighlighted }">
+    Text with dynamic class binding
+    </div>
+
+    <div [ngStyle]="{ 'font-size': fontSize, 'background-color': color }">
+    [9]Text with ngStyle size binding
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="container">
+    <div *ngFor="let item of data">
+      <div>{{ item.title }}</div>
+      <div>{{ item.date | date }}</div>
+      <div>{{ item.price | currency:item.currency }}</div>
+    </div>
+    <hr>
+    @for (item of data; track $index){
+      <div><b>{{ $index }}</b> - Title : {{ item.title | uppercase }} - Date : {{ item.date | date:'shortDate' }} - Price : {{ item.price | percent }} - Currency : {{ item.currency | lowercase }}</div>   
+    }
+
+     
+
+  </div>
+
+  <br>
+  <br>
+  <div class="mt-2">
+    [10] Passing Data to Child Component
+    <br>
+  <app-user-component *ngFor="let task of tasks" [task]="task" (taskRemoved)="onTaskRemoved($event)">
+  </app-user-component>
+  </div>
+
+  <div class="container">
+    <h2>User Form</h2>
+    <app-user-form></app-user-form>
+  </div>
+
+
+</div>

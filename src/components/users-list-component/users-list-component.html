@@ -1,0 +1,22 @@
+<div class="container">
+    <h3>Users List:</h3>
+    <button class="btn btn-primary" (click)="openCreateUserForm()">Create new</button>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>Department</th>
+
+        </tr>
+        <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.age }}</td>
+            <td>{{ user.department.name }}</td>
+        </tr>
+    </table>
+</div>
+
