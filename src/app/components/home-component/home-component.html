@@ -1,0 +1,256 @@
+<div class="container mt-5">
+  <h1>Chapitre 4</h1>
+  <mat-card>
+    <mat-card-header><b>Binding Events</b></mat-card-header>
+    <mat-card-content>
+      <p>[1] Interpolation : {{ x }}</p>
+      <div>
+        [2] Event Binding <br />
+        <button [hidden]="count === 10" class="btn btn-primary" (click)="increment()">
+          Increment
+        </button>
+        {{ count }}
+        <button class="btn btn-primary" [disabled]="count === 0" (click)="decrement()">
+          Decrement
+        </button>
+        <br />
+        <br />
+
+        <button class="btn btn-info" (click)="changeColor('lightblue')">Blue</button>
+        <button class="btn btn-success mx-1" (click)="changeColor('lightgreen')">Green</button>
+        <button class="btn btn-danger" (click)="changeColor('lightcoral')">Red</button>
+        <button class="btn btn-dark mx-1" (click)="changeColor('darkblue')">Blue</button>
+        <button class="btn btn-secondary" (click)="changeColor('white')">Reset</button>
+        <br />
+        <br />
+        <button class="btn btn-primary" (click)="toggleVisible()">Toggle Message</button>
+        <p *ngIf="isVisible">This message is conditionally visible</p>
+      </div>
+      <div class="mt-2">
+        [3] Property Binding
+        <div>
+          <img width="150px" [src]="img" alt="Properting Binding Example" srcset="" />
+        </div>
+      </div>
+      <div class="mt-2">
+        [4] Two Way Binding <br />
+        <label>Name</label>
+        <input
+          (change)="validateName()"
+          class="form-control w-25"
+          name="name"
+          id="name"
+          [(ngModel)]="name"
+        />
+        {{ name }}
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-divider></mat-divider>
+  <mat-card class="mt-3">
+    <mat-card-header>
+      <b>Directives structurelles</b>
+    </mat-card-header>
+    <mat-card-content>
+      <div>
+        [5] IF ELSE
+        <button class="btn btn-primary" (click)="onButtonClickEvent()">Click Button</button>
+
+        <button (click)="onClearContentMessageEvent()" class="btn btn-secondary">
+          Clear Content
+        </button>
+
+        @if (message) {
+        <div>
+          <p class="alert alert-primary text-dark">
+            {{ message }}
+          </p>
+        </div>
+        }
+
+        @if (_age > 27){
+          <p> Age > 27 </p>
+        }@else if (_age == 27) {
+          <p> Age = 27</p>
+        }@else {
+          <p>Erreur</p>
+        }
+
+
+
+
+
+
+        <div class="mt-5">
+          [6] FOR 
+          @for (item of items; track $index) {
+            <button 
+            class="btn btn-primary btn-sm mx-1">
+              <b>{{$index}}</b> | {{ item }}
+            </button>
+          }
+
+          <br/>
+          [6.1] [FOR] <br/>
+          @for (item of _users; track $index) {
+            <span>[<b> Index : {{$index}}</b> --- 
+             Item : {{item}}]</span>
+          }
+          
+          @switch (_user) {
+            @case ("student") {
+              <p>default value is student</p>
+            }
+            @case ("teacher") {
+              <p>default value is teacher</p>
+            }
+            @default {
+              <p>no value</p>
+            }
+          }
+          
+
+
+        </div>
+
+
+        <div class="mt-5">
+          [7] SWITCH CASE
+          <select
+            class="form-control w-25"
+            #selectedValue
+            (change)="changeStatus(selectedValue.value)"
+            name="status"
+            id="status"
+          >
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+            <option value="pending">Pending</option>
+          </select>
+          <div class="mt-2"></div>
+          @switch (status) { @case ('active') {
+          <p class="alert alert-success w-25">Success</p>
+          } @case ('inactive') {
+          <p class="alert alert-danger w-25">Inactive</p>
+          } @case ('pending') {
+          <p class="alert alert-info w-25">Pending</p>
+          } }
+        </div>
+        Selected AGE [Switch]
+        @switch (_age) {
+          @case (17) {
+            <p>17 YO chosen age</p>
+          }
+          @case (25) {
+            <p>25 YO chosen age</p>
+          }
+          @case (65) {
+            <p>65 YO chosen age</p>
+          }
+          @default {
+            <p>Default age selected {{_age}}</p>
+          }
+        }
+
+
+        @switch(_status){
+          @case ("pending") {
+            <p>Default Status is pending</p>
+          }
+          @case ("active") {
+            <p>Default Status is active</p>
+          }
+          @case ("inactive") {
+            <p>Default Status is inactive</p>
+          }
+          @default {
+            <p>No Status Found</p>
+          }
+        }
+
+       
+
+        <div class="mb-5"></div>
+      </div>
+      <div>
+        @if (_user === "student") {
+          <p>Default value is {{_user}}</p>
+        }@else if(_user === "teacher"){
+          <p>Default value is teacher</p>
+        }@else{
+          <p>Error while checking user</p>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="mt-3">
+    <mat-card-header><b>Directives attributives</b></mat-card-header>
+    <mat-card-content>
+      <div class="">
+        [8]
+        <div [ngClass]="{ highlighted: 
+          isHighlighted, 
+          normal: !isHighlighted }">
+          Text with ngClass Style
+        </div>
+        [9]
+        <div [ngStyle]="{ 
+          'font-size': fontSize, 
+          color: color }">
+          Text with ngStyle Size</div>
+
+          
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="mt-3">
+    <mat-card-header> [10] Parent Child </mat-card-header>
+    <mat-card-content>
+      <app-user-component
+        *ngFor="let task of tasks"
+        [task]="task"
+        [title]="changedValue"
+      >
+      </app-user-component>
+     <br/> 
+
+     
+
+
+       @for (task of tasks; track $index) {
+        <app-user-component
+          [task]="task"
+        >
+        </app-user-component>
+       }
+
+
+
+
+
+
+
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-content>
+      Pipe Conversion Schemas
+      Before Conversion :: {{_date}}
+      <br/>
+      Long Conversion : {{_date| date:'long'}} <br/>
+      Short Conversion : {{_date | date:'short'}} <br/>
+      Uppercase Title : {{_title | uppercase}} <br/>
+      Lowercase Title : {{_title | lowercase}} <br/>
+      Percent Price : {{_price | percent}} <br/>
+      Currency Price : {{_price | currency}}<br/>
+      Json Category : {{_category | json}}
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="container mt-5">
+  <h1>Chapitre 5</h1>
+  <app-user-form-component></app-user-form-component>
+</div>
+
+<div class="mb-5"></div>

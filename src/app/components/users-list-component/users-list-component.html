@@ -1,0 +1,35 @@
+<div class="container mt-4">
+  <h3>Users</h3>
+  <div class="d-flex justify-content-end align-items-end">
+    <button (click)="openCreateUser()" class="btn btn-primary">
+        Create new</button>
+  </div>
+
+  <table class="table">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Email</th>
+      <td>Department</td>
+      <td>Actions</td>
+    </tr>
+    @for (user of users; track $index) {
+    <tr>
+      <td>{{ user.id }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.age }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.department.name }}</td>
+      <td>
+        <button 
+        class="btn btn-sm btn-warning mx-1" 
+        (click)="openEditUser(user.id)">Edit</button>
+        <button 
+        class="btn btn-sm btn-danger" 
+        (click)="removeUser(user.id)">Delete</button>
+      </td>
+    </tr>
+    }
+  </table>
+</div>

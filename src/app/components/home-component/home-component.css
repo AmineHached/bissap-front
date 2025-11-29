@@ -1,0 +1,8 @@
+.highlighted {
+  color: white;
+  background-color: rgb(171, 41, 41);
+}
+
+.normal {
+  color: grey;
+}

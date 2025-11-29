@@ -1,0 +1,28 @@
+<div class="container mt-4">
+  <h3>Departments</h3>
+  <div class="d-flex justify-content-end align-items-end">
+    <button (click)="openCreateDepartment()" class="btn btn-primary">Create new</button>
+  </div>
+
+  <table class="table mt-3">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (d of departments; track $index) {
+      <tr>
+        <td>{{ d.id }}</td>
+        <td>{{ d.name }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning mx-1" (click)="openEditDepartment(d.id)">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="removeDepartment(d.id)">Delete</button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,45 @@
+<div class="container mx-auto mt-10 p-5 max-w-xl space-y-6">
+
+  <!-- [1] Interpolation -->
+  <mat-card appearance="outlined" class="p-4">
+    <h3 class="mb-2">[1] Interpolation</h3>
+    <p class="text-lg">Value of <strong>x</strong>: <span class="text-primary">{{ x }}</span></p>
+  </mat-card>
+
+  <!-- [2] Buttons + Counter -->
+  <mat-card appearance="outlined" class="p-4">
+    <h3 class="mb-3">[2] Counter & Background Color</h3>
+
+    <div class="flex items-center gap-3 mb-3">
+      <button mat-raised-button color="primary" (click)="increment()">Increment</button>
+      <span class="text-xl font-semibold">{{ count }}</span>
+      <button mat-raised-button color="warn" (click)="decrement()">Decrement</button>
+    </div>
+
+    <div class="flex flex-wrap gap-2">
+      <button mat-stroked-button color="primary" (click)="changeColor('lightblue')">Blue</button>
+      <button mat-stroked-button color="accent" (click)="changeColor('lightgreen')">Green</button>
+      <button mat-stroked-button color="warn" (click)="changeColor('lightcoral')">Red</button>
+      <button mat-stroked-button (click)="changeColor('white')">Reset</button>
+    </div>
+  </mat-card>
+
+  <!-- [3] Image Binding -->
+  <mat-card appearance="outlined" class="p-4 text-center">
+    <h3 class="mb-2">[3] Property Binding</h3>
+    <img [src]="img" alt="Binding Example" width="150" class="rounded shadow" />
+  </mat-card>
+
+  <!-- [4] Two-way Binding -->
+  <mat-card appearance="outlined" class="p-4">
+    <h3 class="mb-3">[4] Two-way Binding (ngModel)</h3>
+
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="name" (change)="validateName()" />
+    </mat-form-field>
+
+    <p class="mt-2 text-gray-700">You typed: <strong>{{ name }}</strong></p>
+  </mat-card>
+
+</div>
