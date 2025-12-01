@@ -18,10 +18,10 @@ export class DepartmentFormComponent implements OnInit {
   departmentId: number | null = null;
 
   constructor(
-    private fb: FormBuilder,
-    private ds: DepartmentService,
-    private router: Router,
-    private route: ActivatedRoute
+    private readonly fb: FormBuilder,
+    private readonly ds: DepartmentService,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute
   ) {
     this.formGroup = this.fb.group({
       name: ['', [Validators.required]],

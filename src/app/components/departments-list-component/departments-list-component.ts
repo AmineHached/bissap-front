@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { DepartmentService } from '../../services/department-service';
 import { MATERIAL_IMPORTS } from '../../material.imports';
 import { Router } from '@angular/router';
@@ -13,20 +13,18 @@ import { Department } from '../../models/department';
   styleUrls: ['./departments-list-component.css'],
 })
 export class DepartmentsListComponent implements OnInit {
-  departments: Department[] = [];
 
-  departmentsFromApi: Department[] = [];
+  departmentsFromApi = signal<Department[]>([]);
 
-  constructor(private ds: DepartmentService, private router: Router) {}
+  constructor(private readonly ds: DepartmentService, private readonly router: Router) {}
 
   fetchDepartments(): void {
     this.ds.getDepartmentsFromApi().subscribe((data: Department[]) => {
-      this.departments = data;
+      this.departmentsFromApi.set(data);
     });
   }
 
   ngOnInit(): void {
-    //this.departments = this.ds.getDepartments();
     this.fetchDepartments();
   }
 
@@ -39,10 +37,10 @@ export class DepartmentsListComponent implements OnInit {
   }
 
   removeDepartment(id: number): void {
-    const confirmDelete = window.confirm('Are you sure you want to delete this department?');
+    const confirmDelete = globalThis.confirm('Are you sure you want to delete this department?');
     if (confirmDelete) {
       this.ds.deleteDepartment(id);
-      this.departments = this.ds.getDepartments();
+      this.departmentsFromApi.set(this.departmentsFromApi().filter(dept => dept.id !== id));
     }
   }
 }

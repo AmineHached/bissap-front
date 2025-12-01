@@ -8,11 +8,11 @@ import {
 } from '@angular/forms';
 import { MATERIAL_IMPORTS } from '../../material.imports';
 import { MaterialModule } from '../../material/material-module';
-import { CommonModule, JsonPipe } from '@angular/common';
+import { CommonModule} from '@angular/common';
 import { Department } from '../../models/department';
 import { UserService } from '../../services/user-service';
 import { DepartmentService } from '../../services/department-service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { User } from '../../models/user';
 
 @Component({
@@ -35,12 +35,10 @@ export class UserFormComponent implements OnInit{
   storedData:any = null;
 
   constructor(
-    private builder: FormBuilder, 
-    private us : UserService, // use createUser
-    private ds : DepartmentService,  // use getDepartments
-    private router : Router, // fix redirection using navigate or navigateByUrl
-    private route : ActivatedRoute // create user if !id  , edit user if id
-    ) {
+    private readonly builder: FormBuilder, 
+    private readonly us : UserService, // use createUser
+    private readonly ds : DepartmentService,  // use getDepartments
+    private readonly router : Router    ) {
     this.formGroup = this.builder.group({
       name: ['', [Validators.required]],
       age: [null, Validators.required],
@@ -78,9 +76,9 @@ export class UserFormComponent implements OnInit{
 
   tdf_saveUser(form: any) {
     if (form.invalid) {
-      Object.keys(form.controls).forEach((key) => {
+      for (const key of Object.keys(form.controls)) {
         form.controls[key].markAsTouched();
-      });
+      }
       return;
     }
 

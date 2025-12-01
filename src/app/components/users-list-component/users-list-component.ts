@@ -15,7 +15,7 @@ import { Department } from '../../models/department';
 export class UsersListComponent implements OnInit {
   users: User[] = [];
   departments: Department[] = [];
-  constructor(private us: UserService, private ds: DepartmentService, private router: Router) {}
+  constructor(private readonly us: UserService, private readonly ds: DepartmentService, private readonly router: Router) {}
 
   ngOnInit(): void {
     this.users = this.us.getUsers();
@@ -24,7 +24,6 @@ export class UsersListComponent implements OnInit {
 
   openCreateUser(): void {
     this.router.navigate(['/users/create']);
-    //this.router.navigateByUrl('/users/create');
   }
 
   openEditUser(id: number): void {
@@ -32,7 +31,7 @@ export class UsersListComponent implements OnInit {
   }
 
   removeUser(id: number): void {
-    const alertConfirmation = window.confirm(
+    const alertConfirmation = globalThis.confirm(
       'Are you sure that you want to delete this user ?');
     if (alertConfirmation) {
       this.us.deleteUser(id);
