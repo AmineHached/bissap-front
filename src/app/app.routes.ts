@@ -7,8 +7,11 @@ import { DepartmentFormComponent } from './components/department-form-component/
 
 export const routes: Routes = [
     {path: 'home', component: HomeComponent},
+    {path: 'users/:id', component: UserFormComponent},
     {path: 'users/list', component: UsersListComponent},
     {path: 'users/create', component: UserFormComponent},
+    {path: 'users/:id/edit', component: UserFormComponent},
+
     {path: 'departments/list', component: DepartmentsListComponent},
     {path: 'departments/create', component: DepartmentFormComponent},
     {path: 'departments/:id/edit', component: DepartmentFormComponent}

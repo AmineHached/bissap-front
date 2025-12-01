@@ -43,4 +43,12 @@ export class DepartmentsListComponent implements OnInit {
       this.departmentsFromApi.set(this.departmentsFromApi().filter(dept => dept.id !== id));
     }
   }
+
+  editDepartmentFromApi(id: number): void {
+    this.router.navigate(['/departments', id, 'edit']);
+  }
+
+  addDepartmentFromApi(): void {
+    this.router.navigate(['/departments/create']);
+  }
 }

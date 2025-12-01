@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -11,11 +11,15 @@ import { MATERIAL_IMPORTS } from '../../material.imports';
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ...MATERIAL_IMPORTS],
   templateUrl: './department-form-component.html',
-  styleUrl: './department-form-component.css',
+  styleUrls: ['./department-form-component.css'],
 })
 export class DepartmentFormComponent implements OnInit {
   formGroup: FormGroup;
-  departmentId: number | null = null;
+  departmentId = signal<number | null>(null);
+  department = signal<Department | null>(null);
+
+  // signal to store backend validation errors (name matches template binding)
+  backendErrors = signal<string[] | null>(null);
 
   constructor(
     private readonly fb: FormBuilder,
@@ -30,34 +34,58 @@ export class DepartmentFormComponent implements OnInit {
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam) {
-      this.departmentId = Number(idParam);
-      const depts = this.ds.getDepartments();
-      const dept = depts.find((d) => d.id === this.departmentId);
-      if (dept) {
-        this.formGroup.patchValue({ name: dept.name });
-      }
+    this.departmentId.set(idParam ? Number(idParam) : null);
+
+    if (this.departmentId()) {
+      this.ds.getDepartmentByIdFromApi(this.departmentId()!).subscribe({
+        next: (dept: { name: any; }) => {
+          this.formGroup.patchValue({ name: dept.name });
+        },
+        error: (err: any) => {
+          console.error('Error fetching department:', err);
+          this.backendErrors.set(['Failed to load department data. Please try again later.']);
+        },
+      });
     }
   }
 
+
   saveDepartment(): void {
     if (this.formGroup.invalid) {
-      this.formGroup.markAllAsTouched();
+      this.backendErrors.set(['Please fill all required fields.']);
       return;
     }
 
-    const payload: Department = {
-      id: this.departmentId ?? 0,
-      ...this.formGroup.value,
-    };
+    const formValue = this.formGroup.value;
+  this.backendErrors.set(null); // reset previous errors
 
-    if (this.departmentId) {
-      this.ds.editDepartment(this.departmentId, payload);
+    if (this.departmentId()) {
+      const updated: Department = { id: this.departmentId()!, name: formValue.name };
+      this.ds.editDepartmentInApi(this.departmentId()!, updated)
+        .subscribe({
+          next: () => this.router.navigate(['/departments/list']),
+          error: (err: any) => this.handleBackendError(err)
+        });
     } else {
-      this.ds.addDepartment(payload);
+      const newDepartment: Department = { id: 0, name: formValue.name };
+      this.ds.addDepartmentToApi(newDepartment)
+        .subscribe({
+          next: () => this.router.navigate(['/departments/list']),
+          error: (err: any) => this.handleBackendError(err)
+        });
     }
+  }
 
-    this.router.navigate(['/departments/list']);
+  private handleBackendError(err: any) {
+    console.error('Backend error:', err);
+    if (err.status === 400 && err.error?.message) {
+      const msg = Array.isArray(err.error.message) ? err.error.message : [String(err.error.message)];
+      this.backendErrors.set(msg);
+    } else if (err.message) {
+      this.backendErrors.set([String(err.message)]);
+    } else {
+      this.backendErrors.set(['An unexpected error occurred.']);
+    }
   }
 
   cancel(): void {

@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let d of departments; let i = index">
+      <tr *ngFor="let d of departmentsFromApi(); let i = index">
         <td>{{ d.id }}</td>
         <td>{{ d.name }}</td>
         <td>
