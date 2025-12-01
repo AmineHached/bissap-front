@@ -10,15 +10,24 @@ import { Department } from '../../models/department';
   standalone: true,
   imports: [CommonModule, ...MATERIAL_IMPORTS],
   templateUrl: './departments-list-component.html',
-  styleUrl: './departments-list-component.css',
+  styleUrls: ['./departments-list-component.css'],
 })
 export class DepartmentsListComponent implements OnInit {
   departments: Department[] = [];
 
+  departmentsFromApi: Department[] = [];
+
   constructor(private ds: DepartmentService, private router: Router) {}
 
+  fetchDepartments(): void {
+    this.ds.getDepartmentsFromApi().subscribe((data: Department[]) => {
+      this.departments = data;
+    });
+  }
+
   ngOnInit(): void {
-    this.departments = this.ds.getDepartments();
+    //this.departments = this.ds.getDepartments();
+    this.fetchDepartments();
   }
 
   openCreateDepartment(): void {

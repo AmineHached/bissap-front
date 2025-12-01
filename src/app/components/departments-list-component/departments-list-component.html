@@ -13,8 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      @for (d of departments; track $index) {
-      <tr>
+      <tr *ngFor="let d of departments; let i = index">
         <td>{{ d.id }}</td>
         <td>{{ d.name }}</td>
         <td>
@@ -22,7 +21,6 @@
           <button class="btn btn-sm btn-danger" (click)="removeDepartment(d.id)">Delete</button>
         </td>
       </tr>
-      }
     </tbody>
   </table>
 </div>

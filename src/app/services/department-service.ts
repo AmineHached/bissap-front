@@ -1,10 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Department } from '../models/department';
+import { environment } from '../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DepartmentService {
+
+  // Ensure there's a slash between base URL and prefix
+  apiUrl = `${environment.apiUrl}/${environment.departmentPrefix}`;
+
+  constructor(private http: HttpClient) {}
+
   private departments : Department[]=[
     {id : 1, name : 'Department 1'},
     {id : 2, name : 'Department 2'},
@@ -13,6 +21,10 @@ export class DepartmentService {
   // GET DEPARTMENTS
   getDepartments():Department[]{
     return this.departments;
+  }
+
+  getDepartmentsFromApi(): any{
+    return this.http.get<Department[]>(this.apiUrl+"/all")
   }
   //ADD DEPARTMENT
   addDepartment(createD : Department):void{
