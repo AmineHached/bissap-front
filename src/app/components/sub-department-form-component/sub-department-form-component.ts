@@ -76,6 +76,7 @@ export class SubDepartmentFormComponent implements OnInit {
   saveSubDepartment(): void {
     if (this.formGroup.invalid) {
       this.backendErrors.set(['Please fill all required fields.']);
+      this.formGroup.markAllAsTouched();
       return;
     }
 
