@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class DepartmentService {
 
   // Ensure there's a slash between base URL and prefix
-  apiUrl = `${environment.apiUrl}/${environment.departmentPrefix}`;
+  apiUrl = `${environment.apiUrl}${environment.departmentPrefix}`;
 
   constructor(private readonly http: HttpClient) {}
 

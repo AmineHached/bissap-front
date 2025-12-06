@@ -7,12 +7,12 @@ import { SubDepartment } from '../models/subDepartment';
   providedIn: 'root',
 })
 export class SubDepartmentService {
-  apiUrl = `${environment.apiUrl}/subDepartments`;
+  private readonly apiUrl = `${environment.apiUrl}${environment.subDepartmentPrefix}`;
 
   constructor(private readonly http: HttpClient) {}
 
   getSubDepartmentsFromApi() {
-    return this.http.get<SubDepartment[]>(`${this.apiUrl}/`);
+    return this.http.get<SubDepartment[]>(`${this.apiUrl}/all`);
   }
 
   getSubDepartmentByIdFromApi(id: number) {
