@@ -1,0 +1,42 @@
+<div class="container mt-4">
+  <h2>Blockchain</h2>
+
+  <div *ngIf="isLoading()" class="alert alert-info">
+    Loading blockchain data...
+  </div>
+
+  <div *ngIf="errorMessage()" class="alert alert-danger">
+    {{ errorMessage() }}
+  </div>
+
+  <div *ngIf="!isLoading() && !errorMessage()">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Index</th>
+          <th>Timestamp</th>
+          <th>Data</th>
+          <th>Previous Hash</th>
+          <th>Hash</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let block of blocksFromApi()">
+          <td>{{ block.index }}</td>
+          <td>{{ block.timestamp }}</td>
+          <td>{{ block.data }}</td>
+          <td class="text-truncate" style="max-width: 200px;" [title]="block.previousHash">
+            {{ block.previousHash }}
+          </td>
+          <td class="text-truncate" style="max-width: 200px;" [title]="block.hash">
+            {{ block.hash }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="blocksFromApi().length === 0" class="alert alert-warning">
+      No blocks found in the blockchain.
+    </div>
+  </div>
+</div>
