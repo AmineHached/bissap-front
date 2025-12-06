@@ -57,6 +57,26 @@
     </div>
 
     <div class="mb-3">
+      <label for="userStatus" class="form-label">Status</label>
+      <select 
+        class="form-select" 
+        id="userStatus" 
+        formControlName="userStatus"
+        [class.is-invalid]="formGroup.get('userStatus')?.touched && formGroup.get('userStatus')?.invalid"
+        [ngClass]="{
+          'border-success bg-light': formGroup.get('userStatus')?.value === 'ACTIVE',
+          'border-warning bg-light': formGroup.get('userStatus')?.value === 'INACTIVE'
+        }"
+      >
+        <option [ngValue]="'ACTIVE'">ACTIVE</option>
+        <option [ngValue]="'INACTIVE'">INACTIVE</option>
+      </select>
+      <div *ngIf="formGroup.get('userStatus')?.touched && formGroup.get('userStatus')?.hasError('required')" class="invalid-feedback">
+        Status is required.
+      </div>
+    </div>
+
+    <div class="mb-3">
       <label for="subDepartment" class="form-label">Sub-Department</label>
       <select 
         class="form-select" 

@@ -8,7 +8,7 @@ import { Block } from '../models/block';
   providedIn: 'root',
 })
 export class BlockchainService {
-  private apiUrl = `${environment.apiUrl}${environment.blockchainPrefix}`;
+  private readonly apiUrl = `${environment.apiUrl}${environment.blockchainPrefix}`;
 
   constructor(private readonly http: HttpClient) {}
 

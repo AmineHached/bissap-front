@@ -1,23 +1,23 @@
-<div *ngFor="let department of departmentsFromApi()">
-  <h4>{{ department.name }} - Sub Departments</h4>
+<div class="container mt-4">
+  <h3>Sub-Departments</h3>
   <div class="d-flex justify-content-end align-items-end mb-2">
-    <button (click)="openCreateSubDepartment(department.id)" class="btn btn-primary btn-sm">Create new Sub-Department</button>
+    <button (click)="createSubDepartment()" class="btn btn-primary">Create new</button>
   </div>
 
-  <table class="table">
+  <table class="table mt-3">
     <thead>
       <tr>
         <th>ID</th>
         <th>Name</th>
-        <th>ID de Department</th>
+        <th>Department</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let sd of subDepartmentsByDepartment(department.id)">
+      <tr *ngFor="let sd of subDepartmentsFromApi()">
         <td>{{ sd.id }}</td>
         <td>{{ sd.name }}</td>
-        <td>{{ sd.department }}</td>
+        <td>{{ sd.department?.name || 'N/A' }}</td>
         <td>
           <button class="btn btn-sm btn-warning mx-1" (click)="editSubDepartmentFromApi(sd.id)">Edit</button>
           <button class="btn btn-sm btn-danger" (click)="removeSubDepartmentFromApi(sd.id)">Delete</button>
@@ -25,3 +25,8 @@
       </tr>
     </tbody>
   </table>
+
+  <div *ngIf="subDepartmentsFromApi().length === 0" class="alert alert-info">
+    No sub-departments found.
+  </div>
+</div>

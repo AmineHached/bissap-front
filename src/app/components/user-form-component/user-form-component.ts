@@ -40,6 +40,7 @@ export class UserFormComponent implements OnInit {
       name: ['', [Validators.required]],
       age: [null, [Validators.required, Validators.min(1)]],
       email: ['', [Validators.email, Validators.required]],
+      userStatus: ['ACTIVE', [Validators.required]],
       subDepartmentId: [null, [Validators.required]],
     });
   }
@@ -65,6 +66,7 @@ export class UserFormComponent implements OnInit {
             name: user.name,
             age: user.age,
             email: user.email,
+            userStatus: user.userStatus,
             subDepartmentId: user.subDepartment?.id ?? null,
           });
         },
@@ -83,7 +85,7 @@ export class UserFormComponent implements OnInit {
       return;
     }
 
-    const { name, age, email, subDepartmentId } = this.formGroup.value;
+    const { name, age, email, userStatus, subDepartmentId } = this.formGroup.value;
     this.backendErrors.set(null);
     this.isSubmitting.set(true);
 
@@ -92,6 +94,7 @@ export class UserFormComponent implements OnInit {
       name,
       age,
       email,
+      userStatus,
       subDepartment: { id: subDepartmentId, name: '', department: { id: 0, name: '' } },
     };
 

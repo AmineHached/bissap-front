@@ -5,6 +5,7 @@ export interface User {
     name: string; 
     age: number;
     email: string;
+    userStatus: string;
     subDepartment: SubDepartment;
 }
 

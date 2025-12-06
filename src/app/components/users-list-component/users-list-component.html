@@ -12,7 +12,9 @@
         <th>Name</th>
         <th>Age</th>
         <th>Email</th>
+        <th>Status</th>
         <th>Sub-Department</th>
+        <th>Department</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -22,7 +24,9 @@
         <td>{{ user.name }}</td>
         <td>{{ user.age }}</td>
         <td>{{ user.email }}</td>
+        <td><span class="badge" [ngClass]="user.userStatus === 'ACTIVE' ? 'bg-success' : 'bg-danger'">{{ user.userStatus }}</span></td>
         <td>{{ user.subDepartment?.name || 'N/A' }}</td>
+        <td>{{ user.subDepartment?.department?.name || 'N/A' }}</td>
         <td>
           <button 
             class="btn btn-sm btn-warning mx-1" 
@@ -39,4 +43,3 @@
     No users found.
   </div>
 </div>
-
