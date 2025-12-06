@@ -1,0 +1,27 @@
+<div *ngFor="let department of departmentsFromApi()">
+  <h4>{{ department.name }} - Sub Departments</h4>
+  <div class="d-flex justify-content-end align-items-end mb-2">
+    <button (click)="openCreateSubDepartment(department.id)" class="btn btn-primary btn-sm">Create new Sub-Department</button>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>ID de Department</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let sd of subDepartmentsByDepartment(department.id)">
+        <td>{{ sd.id }}</td>
+        <td>{{ sd.name }}</td>
+        <td>{{ sd.department }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning mx-1" (click)="editSubDepartmentFromApi(sd.id)">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="removeSubDepartmentFromApi(sd.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>

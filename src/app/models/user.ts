@@ -1,9 +1,10 @@
-import { Department } from "./department";
+import { SubDepartment } from "./subDepartment";
 
 export interface User {
-    id : number;
-    name : string; 
-    age : number;
-    email : string;
-    department : Department;
+    id: number;
+    name: string; 
+    age: number;
+    email: string;
+    subDepartment: SubDepartment;
 }
+

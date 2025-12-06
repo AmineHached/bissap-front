@@ -76,6 +76,7 @@ export class DepartmentFormComponent implements OnInit {
     }
   }
 
+
   private handleBackendError(err: any) {
     console.error('Backend error:', err);
     if (err.status === 400 && err.error?.message) {

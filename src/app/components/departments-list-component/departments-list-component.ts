@@ -36,11 +36,11 @@ export class DepartmentsListComponent implements OnInit {
     this.router.navigate(['/departments', id, 'edit']);
   }
 
-  removeDepartment(id: number): void {
-    const confirmDelete = globalThis.confirm('Are you sure you want to delete this department?');
-    if (confirmDelete) {
-      this.ds.deleteDepartment(id);
-      this.departmentsFromApi.set(this.departmentsFromApi().filter(dept => dept.id !== id));
+  removeDepartmentFromApi(id: number) {
+    if (confirm('Are you sure?')) {
+      this.ds.deleteDepartmentFromApi(id).subscribe(() => {
+        this.fetchDepartments();
+      });
     }
   }
 

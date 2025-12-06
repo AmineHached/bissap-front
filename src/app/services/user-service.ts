@@ -1,35 +1,45 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { User } from '../models/user';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private users : User[] = [
-    {id : 1, name : 'user 1', age : 20 , email :'user1@demo.com', department : {id : 1 , name : 'department 1'}},
-    {id : 2, name : 'user 2', age : 24 , email :'user2@demo.com', department : {id : 2 , name : 'department 2'}}, 
-    {id : 3, name : 'user 3', age : 28 , email :'user3@demo.com', department : {id : 3 , name : 'department 3'}},
-    // id : 4 , ...
-  ];
+  private readonly apiUrl = `${environment.apiUrl}${environment.userPrefix}`;
 
-  // GET USERS
-  getUsers(): User[]{
-    return this.users;
+  constructor(private readonly http: HttpClient) {}
+
+  // GET ALL USERS FROM API
+  getUsersFromApi(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/all`);
   }
-  // ADD USER
-  createUser(createU : User):void {
-    createU.id = this.users.length + 1;
-    this.users.push(createU);
+
+  // GET USER BY ID FROM API
+  getUserByIdFromApi(id: number): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/get/${id}`);
   }
-  // EDIT USER
-  updateUser(id : number , updatedU : User){
-    const index = this.users.findIndex(user => user.id === id);
-    if(index > -1){
-      this.users[index] = updatedU;
-    } 
+
+  // ADD USER TO API
+  addUserToApi(user: User): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/create`, user);
   }
-  // DELETE USER
-  deleteUser(id : number):void{
-    this.users = this.users.filter(user => user.id !== id);
+
+  // EDIT USER IN API
+  editUserInApi(id: number, user: User): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/update/${id}`, user);
+  }
+
+  // DELETE USER FROM API
+  deleteUserFromApi(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/delete/${id}`);
+  }
+
+  // FILTER USERS BY SUB-DEPARTMENT NAME
+  filterBySubDepartmentName(name: string): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/filter/${encodeURIComponent(name)}`);
   }
 }
+
